@@ -35,25 +35,19 @@ end
 
 def apply_coupons(cart, coupons)
   # code here
-  new_hash = {}
-  cart.each do |food, value|
+  cart.clone.each do |item, attrib|
     coupons.each do |coupon|
-      if food == coupon[:item] && cart[food][:count] >= coupon[:num]
-        cart[food][:count] = cart[food][:count] - coupon[:num]
-        if new_hash["#{food} W/COUPON"]
-        new_hash["#{food} W/COUPON"][:count] += 1
-      else
-        new_hash["#{food} W/COUPON"] = {
+      if item == coupon[:item] && coupon[:num] <= cart[item][:count]
+        cart["#{item} W/COUPON"] = {
           :price => coupon[:cost],
-          :clearance => value[:clearance],
-          :count => 1
+          :clearance => cart[item][:clearance],
+          :count => cart[item][:count] / coupon[:num]
         }
-        end
+        cart[item][:count] = cart[item][:count] % coupon[:num]
       end
     end
-    new_hash[food] = value
   end
-  new_hash
+  cart
 end
 
 
