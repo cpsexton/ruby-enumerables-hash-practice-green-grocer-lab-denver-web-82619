@@ -33,7 +33,28 @@ cartHash
 end
 =end
 
-
+def apply_coupons(cart, coupons)
+  # code here
+  new_hash = {}
+  cart.each do |food, value|
+    coupons.each do |coupon|
+      if food == coupon[:item] && cart[food][:count] >= coupon[:num]
+        cart[food][:count] = cart[food][:count] - coupon[:num]
+        if new_hash["#{food} W/COUPON"]
+        new_hash["#{food} W/COUPON"][:count] += 1
+      else
+        new_hash["#{food} W/COUPON"] = {
+          :price => coupon[:cost],
+          :clearance => value[:clearance],
+          :count => 1
+        }
+        end
+      end
+    end
+    new_hash[food] = value
+  end
+  new_hash
+end
 
 
 
