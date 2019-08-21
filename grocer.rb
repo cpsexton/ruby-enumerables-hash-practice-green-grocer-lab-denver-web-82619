@@ -35,21 +35,24 @@ end
 
 def apply_coupons(cart, coupons)
   # code here
-  cart.clone.each do |item, attrib|
-    coupons.each do |coupon|
-      if item == coupon[:item] && coupon[:num] <= cart[item][:count]
-        cart["#{item} W/COUPON"] = {
-          :price => coupon[:cost],
-          :clearance => cart[item][:clearance],
-          :count => cart[item][:count] / coupon[:num]
+  coupons.each do |coupon|
+    if cart.keys.include? coupon[:item]
+      if cart[coupon[:item]][:count] >= coupon[:num]
+        added_name = "#{coupon[:item]} W/COUPON"
+        if cart[added_name]
+          cart[added_name][:count] += coupon[:num]
+        else cart[added_name] = {
+          price: coupon[:cost]/ coupon[:num],
+          clearance: cart[coupon[:item]][:clearance],
+          count: coupon[:num]
         }
-        cart[item][:count] = cart[item][:count] % coupon[:num]
       end
+      cart[coupon[:item]][:count] -= coupon[:num]
     end
   end
-  cart
 end
-
+cart
+end
 
 
 def apply_clearance(cart)
