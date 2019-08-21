@@ -27,7 +27,7 @@ def apply_coupons(cart, coupons)
           end
       end
   end
-  cartHash[food] = info
+  #cartHash[food] = info
 end
 cartHash
 end
