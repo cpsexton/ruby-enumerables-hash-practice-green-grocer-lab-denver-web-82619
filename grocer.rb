@@ -13,12 +13,11 @@ def consolidate_cart(cart)
 end
 
 def apply_coupons(cart, coupons)
-  cartHash = Hash.new
+  cartHash = {}
   cart.each do |food, info|
     coupons.each do |coupon|
       if food == coupon[:item] && info[:count] >= coupon[:num]
         info[:count] -= coupon[:num]
-          
           if cartHash["#{food} W/COUPON"]
             cartHash["#{food} W/COUPON"][:count] += 1
           else
