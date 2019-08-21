@@ -11,7 +11,7 @@ def consolidate_cart(cart)
     end
     consolidated_cart
 end
-
+=begin
 def apply_coupons(cart, coupons)
   cartHash = {}
   cart.each do |food, info|
@@ -31,6 +31,11 @@ def apply_coupons(cart, coupons)
 end
 cartHash
 end
+=end
+
+
+
+
 
 def apply_clearance(cart)
   cartHash = cart
